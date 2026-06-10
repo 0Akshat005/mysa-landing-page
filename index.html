@@ -45,30 +45,11 @@
       background-color: var(--bg-primary);
       color: var(--text-ink);
       overflow-x: hidden;
-      cursor: none;
       line-height: 1.5;
     }
     body.modal-open { overflow: hidden; }
 
-    /* CUSTOM CURSOR */
-    .custom-cursor {
-      position: fixed; top: 0; left: 0;
-      width: 10px; height: 10px;
-      background-color: var(--brand-sage);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      transition: width 0.2s var(--ease), height 0.2s var(--ease), background-color 0.2s var(--ease);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-white);
-      font-size: 12px; font-weight: 500;
-      opacity: 0;
-    }
-    .custom-cursor.active { width: 64px; height: 64px; background-color: var(--brand-sage); }
-    .custom-cursor.active::after { content: "Click"; }
-
-    a, button { cursor: none; text-decoration: none; border: none; background: none; font-family: inherit; }
+    a, button { cursor: pointer; text-decoration: none; border: none; background: none; font-family: inherit; }
     a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
       outline: 2px solid var(--brand-sage); outline-offset: 4px;
     }
@@ -106,7 +87,7 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       padding: 24px 48px; display: flex; justify-content: space-between; align-items: center;
-      z-index: 1000; transition: all 280ms var(--ease); background: transparent;
+      z-index: 2000; transition: all 280ms var(--ease); background: transparent;
     }
     nav.scrolled {
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -144,7 +125,6 @@
     .mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
     .mobile-menu a:nth-child(2) { transition-delay: 0.2s; }
     .mobile-menu a:nth-child(3) { transition-delay: 0.3s; }
-    .mobile-menu a:nth-child(4) { transition-delay: 0.4s; }
 
     /* MODAL SYSTEM */
     .modal-overlay { position: fixed; inset: 0; background: rgba(28,28,30,0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 5000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease); }
@@ -245,25 +225,6 @@
     .booking-form button { background: var(--brand-gold); color: var(--text-ink); padding: 14px 32px; border-radius: var(--radius-pill); font-weight: 500; font-size: 15px; transition: all 0.2s; }
     .booking-form button:hover { transform: scale(1.02); }
 
-    /* SECTION 7 - PRICING */
-    .pricing-toggle { background: var(--bg-stone); display: inline-flex; padding: 6px; border-radius: var(--radius-pill); margin: 0 auto 64px; }
-    .toggle-btn { padding: 10px 24px; border-radius: var(--radius-pill); font-size: 14px; font-weight: 500; color: var(--text-ink); transition: all 0.3s; }
-    .toggle-btn.active { background: var(--brand-sage); color: var(--text-white); }
-    .pricing-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: center; }
-    .price-card { background: var(--text-white); border-radius: var(--radius-card); padding: 40px 32px; box-shadow: var(--shadow-card); }
-    .price-card.featured { background: var(--brand-sage); color: var(--text-white); transform: scale(1.05); box-shadow: var(--shadow-hover); position: relative; }
-    .price-card h3 { font-family: var(--font-body); font-size: 20px; font-weight: 600; margin-bottom: 16px; }
-    .price-card.featured h3 { color: var(--text-white); }
-    .price-amount { font-size: 38px; font-family: var(--font-mono); margin-bottom: 24px; }
-    .price-card ul { list-style: none; margin-bottom: 32px; }
-    .price-card li { display: flex; gap: 12px; margin-bottom: 16px; font-size: 14px; opacity: 0.8; }
-    .price-card li::before { content: '✓'; color: var(--brand-sage); font-weight: bold; }
-    .price-card.featured li::before { color: var(--brand-gold); }
-    .btn-outline { border: 1px solid var(--brand-sage); color: var(--brand-sage); padding: 12px; width: 100%; border-radius: var(--radius-pill); font-weight: 500; text-align: center; display: block; transition: all 0.2s;}
-    .btn-outline:hover { background: var(--brand-sage); color: var(--text-white); }
-    .btn-gold { background: var(--brand-gold); color: var(--text-ink); padding: 12px; width: 100%; border-radius: var(--radius-pill); font-weight: 500; text-align: center; display: block; transition: all 0.2s;}
-    .btn-gold:hover { transform: scale(1.02); }
-
     /* SECTION 8 - SUSTAINABILITY */
     .sustainability { position: relative; background: url('assets/mysa_sustainability_1781022799139.png') no-repeat right center / cover; padding: 120px 8%; }
     .sustainability::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(247,244,239,0.97) 50%, transparent 100%); }
@@ -321,7 +282,6 @@
       .app-section { flex-direction: column; height: auto; padding: 120px 8%; text-align: center; }
       .app-content { width: 100%; padding: 0; margin-bottom: 64px; display: flex; flex-direction: column; align-items: center;}
       .app-visual { width: 100%; }
-      .pricing-cards { grid-template-columns: 1fr; }
       .sust-content { width: 100%; }
       .sustainability::before { background: rgba(247,244,239,0.9); }
     }
@@ -359,9 +319,6 @@
   <div id="loader">
     <div class="loader-logo">Mysa</div>
   </div>
-
-  <!-- CUSTOM CURSOR -->
-  <div class="custom-cursor" id="cursor"></div>
 
   <!-- MODAL OVERLAY -->
   <div class="modal-overlay" id="modal-overlay">
@@ -422,7 +379,6 @@
   <div class="mobile-menu" id="mobile-menu">
     <a href="#services" class="mobile-link">Services</a>
     <a href="#how" class="mobile-link">Process</a>
-    <a href="#pricing" class="mobile-link">Pricing</a>
     <a href="#sustainability" class="mobile-link">Sustainability</a>
   </div>
 
@@ -432,7 +388,6 @@
     <div class="nav-links">
       <a href="#services">Services</a>
       <a href="#how">How It Works</a>
-      <a href="#pricing">Pricing</a>
       <a href="#sustainability">Sustainability</a>
     </div>
     <div class="nav-actions">
@@ -535,15 +490,6 @@
           <button class="card-link" data-modal="learn-more" data-title="Steam & Press" data-desc="Our master pressers use industrial tension equipment to ensure your shirts, trousers, and linens have razor-sharp creases and are completely wrinkle-free.">Learn more →</button>
         </div>
       </div>
-      <div class="service-card hover-target">
-        <div class="service-icon"><svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12A10 10 0 1112 2v10z"/></svg></div>
-        <h3>Shoe Cleaning</h3>
-        <p>From scuffed to showroom-ready.</p>
-        <div class="card-bottom">
-          <div class="pill-tag">From ₹499/pair</div>
-          <button class="card-link" data-modal="learn-more" data-title="Shoe Cleaning" data-desc="Sneakers, leather formal shoes, or delicate suede. We perform deep interior sanitization, exterior detailing, and weather-proofing treatments.">Learn more →</button>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -593,38 +539,6 @@
       <input type="text" placeholder="Enter your postcode...">
       <button class="hover-target" data-modal="booking">Check Availability →</button>
     </div>
-  </section>
-
-  <!-- SECTION 7 - PRICING -->
-  <section class="section-padding" id="pricing">
-    <div style="text-align: center;">
-      <div class="pricing-toggle reveal">
-        <button class="toggle-btn active" id="btn-pay">Pay Per Order</button>
-        <button class="toggle-btn hover-target" id="btn-month">Monthly Plan</button>
-      </div>
-    </div>
-    <div class="pricing-cards reveal delay-1">
-      <div class="price-card">
-        <h3>Essential</h3>
-        <div class="price-amount" id="price-1">₹499<span style="font-size:16px">/mo</span></div>
-        <ul><li>Wash & Fold (5 items)</li><li>48hr turnaround</li><li>Free pickup & delivery</li><li>Real-time tracking</li></ul>
-        <button class="btn-outline hover-target" data-modal="booking">Get Started</button>
-      </div>
-      <div class="price-card featured">
-        <div style="position:absolute; top:-12px; right:32px; background:var(--brand-gold); color:var(--text-ink); font-size:11px; font-weight:700; padding:4px 12px; border-radius:12px; text-transform:uppercase;">Most Popular</div>
-        <h3>Premium</h3>
-        <div class="price-amount" id="price-2">₹999<span style="font-size:16px">/mo</span></div>
-        <ul><li>All Essential features</li><li>Dry cleaning included</li><li>24hr express turnaround</li><li>Dedicated valet</li><li>Wooden hangers</li></ul>
-        <button class="btn-gold hover-target" data-modal="booking">Start Free Trial</button>
-      </div>
-      <div class="price-card">
-        <h3>Business</h3>
-        <div class="price-amount">Custom</div>
-        <ul><li>Unlimited items</li><li>Hotel & office linen</li><li>SLA guarantee</li><li>Dedicated account manager</li></ul>
-        <button class="btn-outline hover-target" data-modal="booking">Contact Us</button>
-      </div>
-    </div>
-    <p style="text-align:center; font-size:14px; color:var(--text-mist); margin-top:32px;" class="reveal delay-2">No contracts. Cancel anytime. First pickup free on all plans.</p>
   </section>
 
   <!-- SECTION 8 - SUSTAINABILITY -->
@@ -696,7 +610,7 @@
       <div class="footer-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="#services">Wash & Fold</a></li><li><a href="#services">Dry Cleaning</a></li><li><a href="#services">Steam & Press</a></li><li><a href="#services">Shoe Cleaning</a></li>
+          <li><a href="#services">Wash & Fold</a></li><li><a href="#services">Dry Cleaning</a></li><li><a href="#services">Steam & Press</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -717,28 +631,7 @@
       setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 1200);
     });
 
-    // 2. Custom Cursor Logic (Disabled on touch)
-    const cursor = document.getElementById('cursor');
-    const isTouch = window.matchMedia('(pointer: coarse)').matches;
-    if (!isTouch) {
-      document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        cursor.style.opacity = 1;
-      });
-      document.addEventListener('mouseleave', () => cursor.style.opacity = 0);
-      document.addEventListener('mouseenter', () => cursor.style.opacity = 1);
-
-      document.querySelectorAll('.hover-target, a, button').forEach(target => {
-        target.addEventListener('mouseenter', () => cursor.classList.add('active'));
-        target.addEventListener('mouseleave', () => cursor.classList.remove('active'));
-      });
-    } else {
-      cursor.style.display = 'none';
-      document.body.style.cursor = 'auto';
-    }
-
-    // 3. Dynamic Text Typing
+    // 2. Dynamic Text Typing
     const phrases = ["Picked up from your door.", "Cleaned by experts.", "Handled with care.", "Returned perfectly pressed."];
     let i = 0, j = 0, isDeleting = false;
     const dynamicText = document.getElementById('dynamic-text');
@@ -761,7 +654,7 @@
     }
     setTimeout(type, 2000);
 
-    // 4. Scroll Reveal & Nav & Parallax
+    // 3. Scroll Reveal & Nav & Parallax
     const nav = document.getElementById('navbar');
     const heroImg = document.getElementById('hero-img');
     const appMockup = document.getElementById('app-mockup');
@@ -775,6 +668,8 @@
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
       if (scrollY > 80) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+      
+      const isTouch = window.matchMedia('(pointer: coarse)').matches;
       if (scrollY < window.innerHeight && !isTouch) heroImg.style.transform = `translateY(${scrollY * 0.15}px)`;
       if (appMockup) {
         const rect = appMockup.getBoundingClientRect();
@@ -785,19 +680,7 @@
       }
     });
 
-    // 5. Pricing Toggle
-    const btnPay = document.getElementById('btn-pay'), btnMonth = document.getElementById('btn-month');
-    const price1 = document.getElementById('price-1'), price2 = document.getElementById('price-2');
-    btnPay.addEventListener('click', () => {
-      btnPay.classList.add('active'); btnMonth.classList.remove('active');
-      price1.innerHTML = '₹499<span style="font-size:16px">/mo</span>'; price2.innerHTML = '₹999<span style="font-size:16px">/mo</span>';
-    });
-    btnMonth.addEventListener('click', () => {
-      btnMonth.classList.add('active'); btnPay.classList.remove('active');
-      price1.innerHTML = '₹4,990<span style="font-size:16px">/yr</span>'; price2.innerHTML = '₹9,990<span style="font-size:16px">/yr</span>';
-    });
-
-    // 6. Mobile Menu
+    // 4. Mobile Menu
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
     hamburger.addEventListener('click', () => {
@@ -813,7 +696,7 @@
       });
     });
 
-    // 7. Modal System
+    // 5. Modal System
     const overlay = document.getElementById('modal-overlay');
     const closeBtn = document.getElementById('modal-close');
     const contentAreas = document.querySelectorAll('.modal-content-area');
