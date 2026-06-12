@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mysa | Premium On-Demand Laundry & Garment Care</title>
-  <meta name="description" content="Premium, sustainable garment care and laundry service. Worn with life. Returned with care.">
+  <title>Mysa | Premium Steam Ironing Service</title>
+  <meta name="description" content="Premium Steam Ironing Service. Steam-perfect. Time-perfect. Picked up from your door.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -381,7 +381,15 @@
 
   <!-- SECTION 1 - NAV -->
   <nav id="navbar">
-    <a href="#" class="logo">MYSA</a>
+    <a href="#" class="logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor" width="36" height="36" style="margin-right: 8px; transform: scaleX(-1);">
+        <path d="M240,176H223.33A80.12,80.12,0,0,0,160,112H80a8,8,0,0,0,0,16h80a64.07,64.07,0,0,1,53.25,28.2A8,8,0,0,0,219.92,160H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16Z"/>
+        <path d="M245.54,196.22A8,8,0,0,0,240,192H16a8,8,0,0,0-3.32,15.28C32.18,216.48,68.84,224,128,224s95.82-7.52,115.32-16.72A8,8,0,0,0,245.54,196.22Z"/>
+        <path d="M125.66,42.34C108,60,108,76,108,88a8,8,0,0,0,16,0c0-6,0-16.35,11.66-28C153.33,42.35,153.33,26,153.33,14a8,8,0,0,0-16,0C137.33,20,137.33,30.34,125.66,42.34Z"/>
+        <path d="M173.66,58.34c-11.32,11.32-11.32,24.36-11.32,33.66a8,8,0,0,0,16,0c0-4.08,0-11.83,8.32-20.15,11.32-11.32,11.32-24.36,11.32-33.66a8,8,0,0,0-16,0C182,42.27,182,50.05,173.66,58.34Z"/>
+      </svg>
+      MYSA
+    </a>
     <div class="nav-links">
       <a href="#services">Services</a>
       <a href="#how">How It Works</a>
@@ -398,8 +406,8 @@
   <!-- SECTION 2 - HERO -->
   <section class="hero">
     <div class="hero-content">
-      <div class="eyebrow reveal">Premium Laundry & Garment Care</div>
-      <h1 class="reveal delay-1">Your clothes<br><span class="italic">deserve</span> <span class="wavy-underline italic">better.</span></h1>
+      <div class="eyebrow reveal">Premium Steam Ironing Service</div>
+      <h1 class="reveal delay-1" style="font-size: 56px;">Steam-perfect.<br><span class="italic">Time-perfect.</span></h1>
       <p class="subhead reveal delay-2">
         <span id="dynamic-text"></span><span class="type-cursor"></span>
       </p>
@@ -628,7 +636,7 @@
     });
 
     // 2. Dynamic Text Typing
-    const phrases = ["Picked up from your door.", "Cleaned by experts.", "Handled with care.", "Returned perfectly pressed."];
+    const phrases = ["Picked up from your door.", "Expertly steam ironed.", "Handled with care.", "Returned perfectly crisp."];
     let i = 0, j = 0, isDeleting = false;
     const dynamicText = document.getElementById('dynamic-text');
     function type() {
