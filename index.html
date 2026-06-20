@@ -243,7 +243,7 @@
 
     /* SECTION 9 - TESTIMONIALS */
     .testimonials { background: var(--bg-stone); overflow: hidden; }
-    .test-grid { display: flex; gap: 24px; width: 200%; animation: scrollRow 40s linear infinite; }
+    .test-grid { display: flex; gap: 24px; width: 200%; animation: scrollRow 20s linear infinite; }
     .test-grid:hover { animation-play-state: paused; }
     @keyframes scrollRow { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     .test-card { background: var(--text-white); padding: 32px; border-radius: var(--radius-card); width: 400px; flex-shrink: 0; transition: transform 0.3s; }
@@ -251,6 +251,18 @@
     .test-quote { font-style: italic; font-size: 15px; margin: 16px 0 24px; }
     .test-author { display: flex; align-items: center; gap: 12px; }
     .test-author img { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-stone); }
+    @media (max-width: 768px) {
+      .test-grid { animation: none; width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; gap: 16px; padding: 0 5% 16px; scrollbar-width: none; }
+      .test-grid::-webkit-scrollbar { display: none; }
+      .test-card { width: 85vw; min-width: 85vw; scroll-snap-align: center; padding: 24px; }
+      .test-card:hover { transform: none; }
+      .test-dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+      .test-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-mist); opacity: 0.4; transition: all 0.3s; }
+      .test-dot.active { opacity: 1; background: var(--brand-sage); width: 24px; border-radius: 4px; }
+    }
+    @media (min-width: 769px) {
+      .test-dots { display: none; }
+    }
 
     /* SECTION 10 - TESTIMONIAL VIDEO */
     .testimonial-video-section { background: var(--text-ink); display: flex; align-items: center; padding: 0 8%; height: 100vh; min-height: 800px;}
@@ -621,14 +633,15 @@
       <div class="eyebrow" style="justify-content:center;">What Customers Say</div>
       <h2 style="margin: 16px auto 0;">50,000 people trust Mysa with their wardrobe.</h2>
     </div>
-    <div class="test-grid">
-      <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"Mysa turned a chaotic laundry pile into a non-problem. The valet shows up exactly when promised. Incredible."</p><div class="test-author"><div style="flex:1"><strong>Priya S.</strong>, Delhi<br><span style="font-size:11px; color:var(--brand-sage)">Wash & Fold</span></div></div></div>
-      <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"My wedding lehenga was returned in perfect condition. I was honestly nervous, but Mysa handled it flawlessly."</p><div class="test-author"><div style="flex:1"><strong>Ananya K.</strong>, Bangalore<br><span style="font-size:11px; color:var(--brand-sage)">Wedding & Couture</span></div></div></div>
+    <div class="test-grid" id="test-grid">
+      <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"Mysa turned a chaotic laundry pile into a non-problem. The valet shows up exactly when promised. Incredible."</p><div class="test-author"><div style="flex:1"><strong>Priya S.</strong>, Delhi<br><span style="font-size:11px; color:var(--brand-sage)">Wash &amp; Fold</span></div></div></div>
+      <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"My wedding lehenga was returned in perfect condition. I was honestly nervous, but Mysa handled it flawlessly."</p><div class="test-author"><div style="flex:1"><strong>Ananya K.</strong>, Bangalore<br><span style="font-size:11px; color:var(--brand-sage)">Wedding &amp; Couture</span></div></div></div>
       <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"The dry cleaning is better than anything I found locally. Worth every rupee."</p><div class="test-author"><div style="flex:1"><strong>Arjun M.</strong>, Mumbai<br><span style="font-size:11px; color:var(--brand-sage)">Dry Cleaning</span></div></div></div>
       <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"As a hotel owner, Mysa's bulk linen service has cut our turnaround time in half."</p><div class="test-author"><div style="flex:1"><strong>Deepak R.</strong>, Pune<br><span style="font-size:11px; color:var(--brand-sage)">Bulk Linen</span></div></div></div>
       <!-- Duplicate -->
-      <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"Mysa turned a chaotic laundry pile into a non-problem. The valet shows up exactly when promised. Incredible."</p><div class="test-author"><div style="flex:1"><strong>Priya S.</strong>, Delhi<br><span style="font-size:11px; color:var(--brand-sage)">Wash & Fold</span></div></div></div>
+      <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"Mysa turned a chaotic laundry pile into a non-problem. The valet shows up exactly when promised. Incredible."</p><div class="test-author"><div style="flex:1"><strong>Priya S.</strong>, Delhi<br><span style="font-size:11px; color:var(--brand-sage)">Wash &amp; Fold</span></div></div></div>
     </div>
+    <div class="test-dots" id="test-dots"></div>
   </section>
 
   <!-- SECTION 10 - TESTIMONIAL VIDEO -->
@@ -829,6 +842,56 @@
       window.open(whatsappUrl, '_blank');
       closeBtn.click();
     });
+    // 6. Mobile Testimonial Carousel
+    (function() {
+      const grid = document.getElementById('test-grid');
+      const dotsContainer = document.getElementById('test-dots');
+      if (!grid || !dotsContainer) return;
+      const isMobile = () => window.innerWidth <= 768;
+      if (!isMobile()) return;
+
+      const cards = grid.querySelectorAll('.test-card');
+      const totalCards = cards.length;
+
+      // Create dots
+      for (let i = 0; i < totalCards; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'test-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => {
+          cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        });
+        dotsContainer.appendChild(dot);
+      }
+      const dots = dotsContainer.querySelectorAll('.test-dot');
+
+      // Update dots on scroll
+      let currentIndex = 0;
+      grid.addEventListener('scroll', () => {
+        const scrollLeft = grid.scrollLeft;
+        const cardWidth = cards[0].offsetWidth + 16;
+        const newIndex = Math.round(scrollLeft / cardWidth);
+        if (newIndex !== currentIndex && newIndex >= 0 && newIndex < totalCards) {
+          currentIndex = newIndex;
+          dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+        }
+      });
+
+      // Auto-advance every 3 seconds
+      let autoSlide = setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalCards;
+        cards[currentIndex].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }, 3000);
+
+      // Pause auto-advance on touch
+      grid.addEventListener('touchstart', () => clearInterval(autoSlide), { passive: true });
+      grid.addEventListener('touchend', () => {
+        autoSlide = setInterval(() => {
+          currentIndex = (currentIndex + 1) % totalCards;
+          cards[currentIndex].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }, 3000);
+      }, { passive: true });
+    })();
+
   </script>
 </body>
 </html>
