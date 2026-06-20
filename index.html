@@ -130,6 +130,7 @@
     .mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
     .mobile-menu a:nth-child(2) { transition-delay: 0.2s; }
     .mobile-menu a:nth-child(3) { transition-delay: 0.3s; }
+    .mobile-menu a:nth-child(4) { transition-delay: 0.4s; }
 
     /* MODAL SYSTEM */
     .modal-overlay { position: fixed; inset: 0; background: rgba(28,28,30,0.4); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 5000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease); }
@@ -286,11 +287,10 @@
       .hero { flex-direction: column; height: auto; min-height: auto; }
       .hero-content { width: 100%; padding: 120px 8% 40px; }
       .hero-visual { width: 100%; height: 50vh; min-height: 400px; }
-      .testimonial-video-section { flex-direction: column; height: auto; padding: 120px 8%; text-align: center; }
-      .testimonial-video-content { width: 100%; padding: 0; margin-bottom: 64px; display: flex; flex-direction: column; align-items: center;}
-      .testimonial-video-container { width: 100%; }
-      .sust-content { width: 100%; }
-      .sustainability::before { background: rgba(247,244,239,0.9); }
+      .testimonial-video-section { flex-direction: column; height: auto; padding: 80px 8%; text-align: center; }
+      .testimonial-video-content { width: 100%; padding: 0; margin-bottom: 48px; display: flex; flex-direction: column; align-items: center;}
+      .testimonial-video-container { width: 100%; display: flex; justify-content: center; }
+      .testimonial-video-container video { max-width: 280px !important; }
     }
     @media (max-width: 768px) {
       nav { top: 16px; left: 16px; right: 16px; padding: 12px 24px; border-radius: 20px; }
@@ -308,9 +308,13 @@
       .hero h1 { font-size: 56px; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .section-header h2 { font-size: 40px; }
+      .floating-card { bottom: 24px; left: 50%; transform: translateX(-50%); right: auto; font-size: 11px; padding: 12px 18px; opacity: 0; animation: floatUpCenter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 1s; }
+      @keyframes floatUpCenter { to { transform: translateX(-50%) translateY(0); opacity: 1; } }
       .booking-form { flex-direction: column; background: transparent; gap: 12px; padding: 0; }
       .booking-form input { padding: 14px 24px; background: var(--text-white); color: var(--text-ink); }
       .booking-form input, .booking-form button { border-radius: var(--radius-pill); }
+      .sust-content { width: 100%; }
+      .sustainability::before { background: rgba(247,244,239,0.9); }
     }
     @media (max-width: 480px) {
       .section-padding { padding: 80px 5%; }
@@ -322,6 +326,12 @@
       .hero h1 { font-size: 42px; }
       .section-header h2 { font-size: 32px; }
       .hero-visual { height: 40vh; min-height: 300px; }
+      .testimonial-video-section { padding: 60px 5%; }
+      .testimonial-video-content .section-header h2 { font-size: 28px !important; }
+      .testimonial-video-content p { font-size: 15px !important; }
+      .testimonial-video-container video { max-width: 240px !important; }
+      .testimonial-author { gap: 12px; justify-content: center; }
+      .testimonial-author .avatar { width: 44px; height: 44px; font-size: 16px; }
     }
     .whatsapp-float {
       position: fixed;
@@ -426,6 +436,7 @@
     <a href="#services" class="mobile-link">Services</a>
     <a href="#how" class="mobile-link">Process</a>
     <a href="#sustainability" class="mobile-link">Sustainability</a>
+    <a href="#testimonials" class="mobile-link">Testimonials</a>
   </div>
 
   <!-- SECTION 1 - NAV -->
