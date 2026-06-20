@@ -243,9 +243,9 @@
 
     /* SECTION 9 - TESTIMONIALS */
     .testimonials { background: var(--bg-stone); overflow: hidden; }
-    .test-grid { display: flex; gap: 24px; width: 200%; animation: scrollRow 20s linear infinite; }
+    .test-grid { display: flex; gap: 24px; width: max-content; animation: scrollRow 20s linear infinite; }
     .test-grid:hover { animation-play-state: paused; }
-    @keyframes scrollRow { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @keyframes scrollRow { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 12px)); } }
     .test-card { background: var(--text-white); padding: 32px; border-radius: var(--radius-card); width: 400px; flex-shrink: 0; transition: transform 0.3s; }
     .test-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
     .test-quote { font-style: italic; font-size: 15px; margin: 16px 0 24px; }
@@ -255,6 +255,7 @@
       .test-grid { animation: none; width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; gap: 16px; padding: 0 5% 16px; scrollbar-width: none; }
       .test-grid::-webkit-scrollbar { display: none; }
       .test-card { width: 85vw; min-width: 85vw; scroll-snap-align: center; padding: 24px; }
+      .test-card.duplicate { display: none; }
       .test-card:hover { transform: none; }
       .test-dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
       .test-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-mist); opacity: 0.4; transition: all 0.3s; }
@@ -666,8 +667,11 @@
       <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"My wedding lehenga was returned in perfect condition. I was honestly nervous, but Mysa handled it flawlessly."</p><div class="test-author"><div style="flex:1"><strong>Ananya K.</strong>, Bangalore<br><span style="font-size:11px; color:var(--brand-sage)">Wedding &amp; Couture</span></div></div></div>
       <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"The dry cleaning is better than anything I found locally. Worth every rupee."</p><div class="test-author"><div style="flex:1"><strong>Arjun M.</strong>, Mumbai<br><span style="font-size:11px; color:var(--brand-sage)">Dry Cleaning</span></div></div></div>
       <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"As a hotel owner, Mysa's bulk linen service has cut our turnaround time in half."</p><div class="test-author"><div style="flex:1"><strong>Deepak R.</strong>, Pune<br><span style="font-size:11px; color:var(--brand-sage)">Bulk Linen</span></div></div></div>
-      <!-- Duplicate -->
-      <div class="test-card"><div class="stars">★★★★★</div><p class="test-quote">"Mysa turned a chaotic laundry pile into a non-problem. The valet shows up exactly when promised. Incredible."</p><div class="test-author"><div style="flex:1"><strong>Priya S.</strong>, Delhi<br><span style="font-size:11px; color:var(--brand-sage)">Wash &amp; Fold</span></div></div></div>
+      <!-- Duplicates for seamless infinite scroll -->
+      <div class="test-card duplicate"><div class="stars">★★★★★</div><p class="test-quote">"Mysa turned a chaotic laundry pile into a non-problem. The valet shows up exactly when promised. Incredible."</p><div class="test-author"><div style="flex:1"><strong>Priya S.</strong>, Delhi<br><span style="font-size:11px; color:var(--brand-sage)">Wash &amp; Fold</span></div></div></div>
+      <div class="test-card duplicate"><div class="stars">★★★★★</div><p class="test-quote">"My wedding lehenga was returned in perfect condition. I was honestly nervous, but Mysa handled it flawlessly."</p><div class="test-author"><div style="flex:1"><strong>Ananya K.</strong>, Bangalore<br><span style="font-size:11px; color:var(--brand-sage)">Wedding &amp; Couture</span></div></div></div>
+      <div class="test-card duplicate"><div class="stars">★★★★★</div><p class="test-quote">"The dry cleaning is better than anything I found locally. Worth every rupee."</p><div class="test-author"><div style="flex:1"><strong>Arjun M.</strong>, Mumbai<br><span style="font-size:11px; color:var(--brand-sage)">Dry Cleaning</span></div></div></div>
+      <div class="test-card duplicate"><div class="stars">★★★★★</div><p class="test-quote">"As a hotel owner, Mysa's bulk linen service has cut our turnaround time in half."</p><div class="test-author"><div style="flex:1"><strong>Deepak R.</strong>, Pune<br><span style="font-size:11px; color:var(--brand-sage)">Bulk Linen</span></div></div></div>
     </div>
     <div class="test-dots" id="test-dots"></div>
   </section>
@@ -878,15 +882,21 @@
       const isMobile = () => window.innerWidth <= 768;
       if (!isMobile()) return;
 
-      const cards = grid.querySelectorAll('.test-card');
+      const cards = grid.querySelectorAll('.test-card:not(.duplicate)');
       const totalCards = cards.length;
+
+      // Helper to scroll only the grid (prevents page jump)
+      function scrollToCard(index) {
+        const targetLeft = cards[index].offsetLeft - grid.offsetLeft - (grid.offsetWidth - cards[index].offsetWidth) / 2;
+        grid.scrollTo({ left: targetLeft, behavior: 'smooth' });
+      }
 
       // Create dots
       for (let i = 0; i < totalCards; i++) {
         const dot = document.createElement('div');
         dot.className = 'test-dot' + (i === 0 ? ' active' : '');
         dot.addEventListener('click', () => {
-          cards[i].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          scrollToCard(i);
         });
         dotsContainer.appendChild(dot);
       }
@@ -907,7 +917,7 @@
       // Auto-advance every 3 seconds
       let autoSlide = setInterval(() => {
         currentIndex = (currentIndex + 1) % totalCards;
-        cards[currentIndex].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        scrollToCard(currentIndex);
       }, 3000);
 
       // Pause auto-advance on touch
@@ -915,7 +925,7 @@
       grid.addEventListener('touchend', () => {
         autoSlide = setInterval(() => {
           currentIndex = (currentIndex + 1) % totalCards;
-          cards[currentIndex].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          scrollToCard(currentIndex);
         }, 3000);
       }, { passive: true });
     })();
