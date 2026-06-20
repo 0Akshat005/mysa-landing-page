@@ -319,8 +319,8 @@
       .hero-cta { gap: 16px; margin-bottom: 40px; }
       .social-proof { flex-wrap: wrap; gap: 10px; }
       .hero-visual { height: 55vh; min-height: 350px; }
-      .floating-card { bottom: 20px; left: 50%; transform: translateX(-50%); right: auto; font-size: 11px; padding: 12px 18px; opacity: 0; animation: floatUpCenter 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 1s; }
-      @keyframes floatUpCenter { to { transform: translateX(-50%) translateY(0); opacity: 1; } }
+      .floating-card { top: 24px; left: 24px; bottom: auto; right: auto; transform: translateY(20px); font-size: 11px; padding: 12px 18px; opacity: 0; animation: floatTopLeft 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 1s; }
+      @keyframes floatTopLeft { to { transform: translateY(0); opacity: 1; } }
       .section-padding { padding: 80px 6%; }
       .section-header { margin-bottom: 40px; }
       .section-header h2 { font-size: 36px; }
